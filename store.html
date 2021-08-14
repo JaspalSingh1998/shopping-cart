@@ -42,7 +42,7 @@
       </div>
     </section>
     <section>
-      <div class="mb-4 top-0 right-0 mr-4 mt-20 fixed">
+      <div data-cart-items-wrapper class="mb-4 top-0 right-0 mr-4 mt-20 fixed">
         <div
           style="max-height: calc(100vh - 6rem)"
           class="
@@ -55,7 +55,7 @@
             flex flex-col
           "
         >
-          <div class="overflow-y-auto px-4 pt-4">
+          <div data-cart-items-container class="overflow-y-auto px-4 pt-4">
             <div class="mb-6">
               <div class="block relative h-24 rounded overflow-hidden">
                 <img
@@ -133,6 +133,7 @@
         </div>
       </div>
       <button
+        data-cart-button
         class="
           fixed
           top-0
@@ -209,6 +210,7 @@
             <p data-price class="mt-1">$16.00</p>
           </div>
           <button
+            data-add-to-cart-button
             class="
               text-white
               py-2
@@ -221,6 +223,46 @@
           >
             Add To Cart
           </button>
+        </div>
+      </div>
+    </template>
+    <template id="cart-item-template">
+      <div data-item class="mb-6">
+        <div class="block relative h-24 rounded overflow-hidden">
+          <img
+            data-image
+            alt="ecommerce"
+            class="object-cover object-center w-full h-full block rounded"
+          />
+          <button
+            data-remove-from-cart-button
+            class="
+              absolute
+              top-0
+              right-0
+              bg-black
+              rounded-tr
+              text-white
+              w-6
+              h-6
+              text-lg
+              flex
+              justify-center
+              items-center
+            "
+          >
+            &times;
+          </button>
+        </div>
+        <div class="mt-2 flex justify-between">
+          <div class="flex items-center title-font">
+            <h2 data-name class="text-gray-900 text-lg font-medium"></h2>
+            <span
+              data-quantity
+              class="text-gray-600 text-sm font-bold ml-1"
+            ></span>
+          </div>
+          <div data-price></div>
         </div>
       </div>
     </template>
