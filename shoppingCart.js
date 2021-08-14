@@ -11,25 +11,20 @@ const cartTotal = document.querySelector("[data-cart-total]");
 const cart = document.querySelector("[data-cart]");
 
 const IMAGE_URL = "https://dummyimage.com/210x130";
+const SESSION_STORAGE_KEY = "SHOPPING_CART_cart";
 let shoppingCart = [];
 
 export function setupShoppingCart() {
+  addGlobalEventListener("click", "[data-remove-from-cart-button]", (e) => {
+    const id = e.target.closest("[data-item]").dataset.itemId;
+    removeFromCart(parseInt(id));
+  });
+  shoppingCart = loadCart();
   renderCart();
+  cartButton.addEventListener("click", () => {
+    cartItemsWrapper.classList.toggle("invisible");
+  });
 }
-
-addGlobalEventListener("click", "[data-remove-from-cart-button]", (e) => {
-  const id = e.target.closest("[data-item]").dataset.itemId;
-  removeFromCart(parseInt(id));
-});
-
-// Remove items from cart
-// Show/Hide the cart when it has no items or when it goes from 0 to 1 item
-// Persist across multiple pages
-
-// show/Hide cart when clicked
-cartButton.addEventListener("click", () => {
-  cartItemsWrapper.classList.toggle("invisible");
-});
 
 // Add items to cart
 export function addToCart(id) {
@@ -40,6 +35,7 @@ export function addToCart(id) {
     shoppingCart.push({ id: id, quantity: 1 });
   }
   renderCart();
+  saveCart();
 }
 
 function removeFromCart(id) {
@@ -47,6 +43,15 @@ function removeFromCart(id) {
   if (existingItem == null) return;
   shoppingCart = shoppingCart.filter((entry) => entry.id !== id);
   renderCart();
+  saveCart();
+}
+
+function saveCart() {
+  sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(shoppingCart));
+}
+function loadCart() {
+  const cart = sessionStorage.getItem(SESSION_STORAGE_KEY);
+  return JSON.parse(cart) || [];
 }
 
 function renderCart() {
